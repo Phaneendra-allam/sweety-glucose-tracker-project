@@ -370,7 +370,7 @@ Authenticated endpoints require a JWT token.
 - Patients can access only their own readings.
 - Doctors can access only their assigned patients' reports.
 
-## Notes and Assumptions
+## Notes
 
 - Patients are automatically assigned to the doctor configured through DEFAULT_DOCTOR_EMAIL.
 - The application supports one configured default doctor for new patient registrations.
@@ -379,7 +379,7 @@ Authenticated endpoints require a JWT token.
 - Gemini AI functionality is optional; FAQ responses are available without an API key.
 - Demo credentials are intended for development and demonstration only.
 
-## Future Improvements
+### What I Would Improve With More Time
 
 With more development time, I would improve the application by:
 
