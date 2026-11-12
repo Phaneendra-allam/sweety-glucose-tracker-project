@@ -1,408 +1,407 @@
-\# Sweety – Blood Glucose Tracker
 
+# Sweety - Blood Glucose Tracker
 
+A full-stack blood glucose tracking application built using React, Node.js, Express and PostgreSQL.
 
-A full-stack blood glucose tracking application built with React, Node.js, Express and PostgreSQL.
+## Live Application
 
+- **Frontend:** https://sweety-frontend-jr14.onrender.com/
+- **Backend API:** https://sweety-glucose-tracker-project.onrender.com/
+- **GitHub:** https://github.com/Phaneendra-allam/sweety-glucose-tracker-project
 
+## Features
 
-\## Features
+### Patient Features
+- Patient registration and login
+- Secure password hashing using bcrypt
+- JWT authentication
+- Add, view, edit and delete glucose readings
+- Four daily reading slots:
+  - Morning
+  - After breakfast
+  - After lunch
+  - After dinner
+- Glucose value validation between 40 and 600 mg/dL
+- Duplicate reading prevention
+- Dashboard with highest, lowest and average readings
+- Reading history and charts
+- Daily, month-to-date and previous-month reports
+- Patient chatbot with FAQ support and optional Gemini AI
 
+### Doctor Features
+- Doctor login
+- Doctor dashboard
+- View assigned patients
+- View individual patient glucose readings
+- Generate daily and monthly patient reports
+- Automatic doctor assignment when a patient registers
 
+## Technology Stack
 
-\- User registration and login
+### Frontend
+- React
+- Vite
+- JavaScript
+- CSS
+- Axios
+- React Router
+- Recharts
 
-\- Secure password hashing using bcrypt
+### Backend
+- Node.js
+- Express.js
+- PostgreSQL
+- bcryptjs
+- JSON Web Token
+- Google Gemini API (optional)
 
-\- JWT-based authentication
-
-\- Add, view, edit and delete glucose readings
-
-\- Four daily reading slots:
-
-&#x20; - Morning
-
-&#x20; - After breakfast
-
-&#x20; - After lunch
-
-&#x20; - After dinner
-
-\- Glucose validation between 40 and 600 mg/dl
-
-\- Prevent duplicate readings for the same time slot and date
-
-\- Dashboard with highest, lowest, average and total readings
-
-\- Daily, month-to-date and previous-month reports
-
-\- Reading history and chart visualization
-
-\- User-specific reading data
-
-
-
-\## Technology Stack
-
-
-
-\*\*Frontend\*\*
-
-\- React
-
-\- Vite
-
-\- CSS
-
-\- Axios
-
-\- Recharts
-
-\- React Router
-
-
-
-\*\*Backend\*\*
-
-\- Node.js
-
-\- Express.js
-
-\- PostgreSQL
-
-\- JWT
-
-\- bcryptjs
-
-
-
-\## Project Structure
-
-
+## Project Structure
 
 ```text
-
-sweety-glucose-tracker/
-
-├── client/
-
-│   ├── src/
-
-│   └── package.json
-
-├── server/
-
-│   ├── config/
-
-│   ├── controllers/
-
-│   ├── database/
-
-│   │   ├── schema.sql
-
-│   │   └── seed.js
-
-│   ├── middleware/
-
-│   ├── routes/
-
-│   ├── .env.example
-
-│   └── package.json
-
-├── .gitignore
-
-└── README.md
-
+sweety-glucose-tracker-project/
+|
+|-- client/
+|   |-- public/
+|   |-- src/
+|   |-- package.json
+|   |-- .env.example
+|   |
+|-- server/
+|   |-- config/
+|   |-- controllers/
+|   |-- database/
+|   |   |-- schema.sql
+|   |   |-- doctor_migration.sql
+|   |   |-- seed.js
+|   |   |-- setupDoctor.js
+|   |-- middleware/
+|   |-- routes/
+|   |-- .env.example
+|   |-- package.json
+|   |-- server.js
+|
+|-- .gitignore
+|-- README.md
 ```
 
+## Requirements
 
+Install the following before running the project:
 
-\## Requirements
+- Node.js
+- npm
+- PostgreSQL
+- Git
 
+## Installation and Setup
 
-
-\- Node.js
-
-\- npm
-
-\- PostgreSQL
-
-
-
-\## Installation
-
-
-
-\### 1. Clone the repository
-
-
+### 1. Clone the repository
 
 ```bash
+git clone https://github.com/Phaneendra-allam/sweety-glucose-tracker-project.git
 
-git clone https://github.com/Phaneendra-allam/sweety-glucose-tracker.git
-cd sweety-glucose-tracker
-
+cd sweety-glucose-tracker-project
 ```
 
+### 2. Create the PostgreSQL database
 
-
-\### 2. Set up PostgreSQL
-
-
-
-Create a database named:
-
-
+Open PostgreSQL and create a database:
 
 ```sql
-
-CREATE DATABASE sweety\_db;
-
+CREATE DATABASE sweety_db;
 ```
 
+### 3. Create the database tables
 
-
-Run the database schema:
-
-
+From the project root, run:
 
 ```bash
-
-psql -U postgres -d sweety\_db -f server/database/schema.sql
-
+psql -U postgres -d sweety_db -f server/database/schema.sql
 ```
 
-
-
-\### 3. Configure the backend
-
-
-
-Go to the server folder:
-
-
+Then run the Doctor migration:
 
 ```bash
+psql -U postgres -d sweety_db -f server/database/doctor_migration.sql
+```
 
+The migration adds user roles and the doctor-patient assignment table.
+
+### 4. Configure backend environment variables
+
+Open the server folder:
+
+```bash
 cd server
+```
 
+Create a `.env` file using `.env.example`.
+
+Configure the following variables:
+
+```env
+PORT=5000
+
+PGHOST=localhost
+PGPORT=5432
+PGDATABASE=sweety_db
+PGUSER=postgres
+PGPASSWORD=your_postgres_password
+
+JWT_SECRET=replace_with_a_long_random_secret
+
+CLIENT_URL=http://localhost:5173
+DEFAULT_DOCTOR_EMAIL=doctor@sweety.com
+
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.8-flash
+```
+
+Replace the database password and JWT secret with your own values.
+
+Gemini API configuration is optional. The chatbot FAQ functionality works without a Gemini API key.
+
+### 5. Install backend dependencies
+
+Inside the server directory:
+
+```bash
 npm install
-
 ```
 
+### 6. Seed the demo patient
 
-
-Create a `.env` file using `.env.example` and configure your PostgreSQL credentials and JWT secret.
-
-
-
-\### 4. Start the backend
-
-
+Run:
 
 ```bash
-
-npm run dev
-
-```
-
-
-
-Backend runs at:
-
-
-
-```text
-
-http://localhost:5000
-
-```
-
-
-
-\### 5. Configure and start the frontend
-
-
-
-Open another terminal:
-
-
-
-```bash
-
-cd client
-
-npm install
-
-npm run dev
-
-```
-
-
-
-Frontend runs at:
-
-
-
-```text
-
-http://localhost:5173
-
-```
-
-
-
-\## Demo Login
-
-
-
-After running the seed script:
-
-
-
-```bash
-
-cd server
-
 npm run seed
-
 ```
 
+This creates a demo patient and four sample glucose readings.
 
+Demo patient:
 
-Use these credentials:
+- Email: demo@sweety.com
+- Password: Sweety12345
 
+Note: Running the seed script again resets the demo patient's existing readings.
 
+### 7. Create the demo doctor
 
-\- Email: `demo@sweety.com`
+Run:
 
-\- Password: `Sweety12345`
+```bash
+node database/setupDoctor.js
+```
 
+This creates or updates the demo doctor and assigns the demo patient.
 
+Demo doctor:
 
-The seed script creates a demo user with four sample readings.
+- Email: doctor@sweety.com
+- Password: Doctor12345
 
+The setup script resets the demo doctor's password to this development password. Change it before using the application beyond a local demo.
 
+### 8. Start the backend server
 
-\## API Endpoints
+From the server directory:
 
+```bash
+npm run dev
+```
 
+Backend URL:
 
-\### Authentication
+```text
+http://localhost:5000
+```
 
+### 9. Configure the frontend
 
+Open another terminal and navigate to the client folder:
 
-| Method | Endpoint |
+```bash
+cd client
+```
 
-|---|---|
+Create a `.env` file containing:
 
-| POST | `/api/auth/register` |
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-| POST | `/api/auth/login` |
+### 10. Install frontend dependencies
 
+```bash
+npm install
+```
 
+### 11. Start the frontend
 
-\### Glucose Readings
+```bash
+npm run dev
+```
 
+Frontend URL:
 
-
-| Method | Endpoint |
-
-|---|---|
-
-| POST | `/api/readings` |
-
-| GET | `/api/readings` |
-
-| PUT | `/api/readings/:id` |
-
-| DELETE | `/api/readings/:id` |
-
-
-
-\### Reports
-
-
-
-| Method | Endpoint |
-
-|---|---|
-
-| GET | `/api/reports/daily?date=YYYY-MM-DD` |
-
-| GET | `/api/reports/month-to-date?date=YYYY-MM-DD` |
-
-| GET | `/api/reports/monthly?date=YYYY-MM-DD` |
-
-
-
-All reading and report endpoints require JWT authentication.
-
-
-
-\## Validation Rules
-
-
-
-\- Glucose value is required.
-
-\- Glucose value must be a whole number between 40 and 600 mg/dl.
-
-\- Only one reading is allowed per time slot per day.
-
-\- Maximum four readings are allowed per day.
-
-\- Future dates are not allowed.
-
-\- Users can access only their own readings.
-
-
-
-\## Notes and Future Improvements
-
-
-
-\- Add automated frontend and backend tests.
-
-\- Add pagination for reading history.
-
-\- Improve accessibility and mobile responsiveness.
-
-\- Add optional doctor access with user permission.
-
-\- Add deployment and production monitoring.
-
-
+```text
+http://localhost:5173
+```
 
 ## Testing
 
-The application was manually tested using the browser and Postman.
+### Frontend checks
 
-Verified scenarios:
-- User registration and login
-- Add, view, edit and delete glucose readings
-- Required field and glucose range validation
-- Duplicate time-slot validation
-- Maximum four readings per day
-- Future-date validation
-- User-specific data access
-- Daily and monthly reports
-- Dashboard calculations and navigation
+Open a terminal in the client directory.
 
-Automated test cases are planned as a future improvement.
+Run the lint command:
 
+```bash
+npm run lint
+```
 
+Create a production build:
 
-\## Author
+```bash
+npm run build
+```
 
+### Backend checks
 
+Start the backend:
 
-Junior Full Stack Developer Assignment – Kenpath
+```bash
+npm run dev
+```
 
+Open the following URL:
 
+```text
+http://localhost:5000/
+```
 
-\*\*Project:\*\* Sweety – Blood Glucose Tracker
+Expected response:
 
+```json
+{
+  "message": "Sweety Glucose Tracker API is running"
+}
+```
 
+Test the database connection:
 
+```text
+http://localhost:5000/api/test-db
+```
+
+### Manual testing checklist
+
+- Patient registration
+- Patient login
+- Doctor login
+- Add glucose reading
+- Edit glucose reading
+- Delete glucose reading
+- Duplicate reading validation
+- Glucose value validation
+- Reading history
+- Daily report
+- Month-to-date report
+- Previous-month report
+- Doctor dashboard
+- Doctor-patient assignment
+- Patient chatbot
+
+Note: Automated backend test cases are not currently configured. The application has been manually tested.
+
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/auth/register |
+| POST | /api/auth/login |
+
+### Glucose Readings
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/readings |
+| GET | /api/readings |
+| PUT | /api/readings/:id |
+| DELETE | /api/readings/:id |
+
+### Reports
+
+| Method | Endpoint |
+|---|---|
+| GET | /api/reports/daily |
+| GET | /api/reports/month-to-date |
+| GET | /api/reports/monthly |
+
+### Doctor
+
+| Method | Endpoint |
+|---|---|
+| GET | /api/doctor/patients |
+| GET | /api/doctor/patients/:id/reports/daily |
+| GET | /api/doctor/patients/:id/reports/month-to-date |
+| GET | /api/doctor/patients/:id/reports/monthly |
+
+### Chatbot
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/chat/message |
+| GET | /api/chat/today-summary |
+
+Authenticated endpoints require a JWT token.
+
+## Validation Rules
+
+- Glucose value must be a whole number.
+- Minimum value: 40 mg/dL.
+- Maximum value: 600 mg/dL.
+- Only one reading is allowed per time slot per day.
+- Maximum four readings per day.
+- Future reading dates are not allowed.
+- Patients can access only their own readings.
+- Doctors can access only their assigned patients' reports.
+
+## Notes and Assumptions
+
+- Patients are automatically assigned to the doctor configured through DEFAULT_DOCTOR_EMAIL.
+- The application supports one configured default doctor for new patient registrations.
+- Patients manually enter their glucose readings.
+- The chatbot provides application guidance and general educational information. It does not provide medical diagnosis or treatment.
+- Gemini AI functionality is optional; FAQ responses are available without an API key.
+- Demo credentials are intended for development and demonstration only.
+
+## Future Improvements
+
+With more development time, I would improve the application by:
+
+- Adding automated frontend and backend tests.
+- Improving mobile responsiveness and accessibility.
+- Adding pagination and advanced filtering to reading history.
+- Improving chatbot responses and error handling.
+- Adding more advanced reports and data visualizations.
+- Implementing production database backups and monitoring.
+
+## Deployment
+
+The application is deployed using Render.
+
+- Frontend: Render Static Site
+- Backend: Render Web Service
+- Database: Render PostgreSQL
+
+Environment variables are configured separately in Render and are not stored in the public repository.
+
+## Author
+
+Developed as part of the Junior Full Stack Developer assignment for Kenpath.
+
+**Project:** Sweety - Blood Glucose Tracker
