@@ -140,8 +140,7 @@ sweety-glucose-tracker/
 
 ```bash
 
-git clone YOUR\_GITHUB\_REPOSITORY\_URL
-
+git clone https://github.com/Phaneendra-allam/sweety-glucose-tracker.git
 cd sweety-glucose-tracker
 
 ```
@@ -373,6 +372,25 @@ All reading and report endpoints require JWT authentication.
 \- Add optional doctor access with user permission.
 
 \- Add deployment and production monitoring.
+
+
+
+## Testing
+
+The application was manually tested using the browser and Postman.
+
+Verified scenarios:
+- User registration and login
+- Add, view, edit and delete glucose readings
+- Required field and glucose range validation
+- Duplicate time-slot validation
+- Maximum four readings per day
+- Future-date validation
+- User-specific data access
+- Daily and monthly reports
+- Dashboard calculations and navigation
+
+Automated test cases are planned as a future improvement.
 
 
 
