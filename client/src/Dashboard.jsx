@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "./api";
 import "./Dashboard.css";
+import Chatbot from "./Chatbot";
+
 
 const slots = [
   "Morning",
@@ -352,6 +354,7 @@ function Dashboard({ onLogout }) {
           </div>
         </section>
       </main>
+ <Chatbot />
     </div>
   );
 }

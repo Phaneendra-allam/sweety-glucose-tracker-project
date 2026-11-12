@@ -375,3 +375,543 @@
     flex-wrap: wrap;
   }
 }
+
+/* Solid white cards - no glass effect */
+
+.dashboard:not(.doctor-dashboard) .summary-card,
+.dashboard:not(.doctor-dashboard) .reading-form-card,
+.dashboard:not(.doctor-dashboard) .history-card {
+  background: #FFFFFF !important;
+  opacity: 1;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  border: 1px solid #E3EBE5;
+  box-shadow: 0 10px 28px rgba(33, 67, 38, 0.06);
+}
+
+/* Solid white form fields */
+
+.dashboard:not(.doctor-dashboard) .dashboard-content input,
+.dashboard:not(.doctor-dashboard) .dashboard-content select,
+.dashboard:not(.doctor-dashboard) .date-control input {
+  background: #FFFFFF;
+  color: #2A2A2A;
+}
+
+/* Keep reading rows clean */
+
+.dashboard:not(.doctor-dashboard) .reading-item {
+  background: transparent;
+}
+
+
+
+/* GREEN GLASSMORPHISM BACKGROUND */
+
+.dashboard:not(.doctor-dashboard) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    linear-gradient(135deg, #D9EBDD, #B7D6BE 45%, #E8F4E9);
+}
+
+/* Large blurred green shapes */
+
+.dashboard:not(.doctor-dashboard)::before {
+  content: "";
+  position: absolute;
+  inset: -80px;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(25, 104, 65, 0.68),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(142, 205, 151, 0.85),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 60% 85%,
+      rgba(35, 127, 85, 0.50),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 5% 85%,
+      rgba(191, 225, 190, 0.90),
+      transparent 32%
+    );
+
+  filter: blur(65px);
+  opacity: 0.95;
+
+  animation: greenBackgroundMove 18s ease-in-out infinite alternate;
+}
+
+/* Glossy light reflections */
+
+.dashboard:not(.doctor-dashboard)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      125deg,
+      rgba(255,255,255,0.28),
+      transparent 40%,
+      rgba(255,255,255,0.18)
+    ),
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255,255,255,0.25),
+      transparent 50%
+    );
+}
+
+/* Content above background */
+
+.dashboard:not(.doctor-dashboard) > .dashboard-sidebar {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard:not(.doctor-dashboard) > .dashboard-main {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+/* Actual frosted glass cards */
+
+.dashboard:not(.doctor-dashboard) .summary-card,
+.dashboard:not(.doctor-dashboard) .reading-form-card,
+.dashboard:not(.doctor-dashboard) .history-card {
+  background: rgba(255, 255, 255, 0.43);
+
+  border: 1px solid rgba(255,255,255,0.78);
+
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+
+  box-shadow:
+    0 12px 35px rgba(25, 75, 48, 0.10),
+    inset 0 1px 1px rgba(255,255,255,0.85);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard:not(.doctor-dashboard) .summary-card:hover,
+.dashboard:not(.doctor-dashboard) .reading-form-card:hover,
+.dashboard:not(.doctor-dashboard) .history-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 40px rgba(25, 75, 48, 0.15),
+    inset 0 1px 1px #FFFFFF;
+}
+
+@keyframes greenBackgroundMove {
+  from {
+    transform: translate3d(-15px, -10px, 0) scale(1);
+  }
+  to {
+    transform: translate3d(20px, 15px, 0) scale(1.08);
+  }
+}
+
+
+/* =========================================
+   SWEETY - PATIENT GLASSMORPHISM OVERRIDE
+   Dashboard + Reading History
+========================================= */
+
+/* Glossy translucent main cards */
+
+.dashboard:not(.doctor-dashboard) .summary-card,
+.dashboard:not(.doctor-dashboard) .reading-form-card,
+.dashboard:not(.doctor-dashboard) .history-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.52),
+    rgba(255, 255, 255, 0.30)
+  ) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+
+  backdrop-filter: blur(25px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(160%) !important;
+
+  box-shadow:
+    0 12px 35px rgba(33, 67, 38, 0.10),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Glossy hover effect */
+
+.dashboard:not(.doctor-dashboard) .summary-card:hover,
+.dashboard:not(.doctor-dashboard) .reading-form-card:hover,
+.dashboard:not(.doctor-dashboard) .history-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 40px rgba(33, 67, 38, 0.15),
+    inset 0 1px 1px #FFFFFF !important;
+}
+
+/* Transparent reading rows */
+
+.dashboard:not(.doctor-dashboard) .reading-item {
+  background: rgba(255, 255, 255, 0.20) !important;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+
+  transition: background 0.25s ease;
+}
+
+.dashboard:not(.doctor-dashboard) .reading-item:hover {
+  background: rgba(255, 255, 255, 0.48) !important;
+}
+
+/* Glass-style input fields */
+
+.dashboard:not(.doctor-dashboard) .dashboard-content input,
+.dashboard:not(.doctor-dashboard) .dashboard-content select,
+.dashboard:not(.doctor-dashboard) .date-control input {
+  background: rgba(255, 255, 255, 0.70) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Smooth card appearance */
+
+.dashboard:not(.doctor-dashboard) .summary-card,
+.dashboard:not(.doctor-dashboard) .reading-form-card,
+.dashboard:not(.doctor-dashboard) .history-card {
+  animation: patientGlassAppear 0.6s ease both;
+}
+
+@keyframes patientGlassAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   SWEETY - PREMIUM PATIENT SIDEBAR
+========================================= */
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: 260px;
+  min-width: 260px;
+  min-height: 100vh;
+
+  padding: 36px 23px 25px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(94, 181, 145, 0.20),
+      transparent 34%
+    ),
+    linear-gradient(
+      155deg,
+      #214326,
+      #123D35 75%,
+      #102F38
+    );
+
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Decorative blurred circles */
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  width: 230px;
+  height: 230px;
+
+  right: -130px;
+  bottom: 12%;
+
+  border: 1px solid rgba(155, 201, 165, 0.18);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 25px rgba(155, 201, 165, 0.04),
+    0 0 0 55px rgba(56, 169, 232, 0.04);
+
+  animation: patientSidebarOrbit 20s linear infinite;
+}
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  width: 170px;
+  height: 170px;
+
+  top: 35%;
+  left: -110px;
+
+  background: rgba(56, 169, 232, 0.13);
+  border-radius: 50%;
+  filter: blur(35px);
+}
+
+/* Keep sidebar content above decorations */
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar > div,
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar > .logout-btn {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sweety brand */
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar h2 {
+  color: #FFFFFF;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Tagline */
+
+.dashboard:not(.doctor-dashboard) .dashboard-sidebar > div > p {
+  margin-top: 9px;
+
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+
+/* Patient navigation */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  margin-top: 55px;
+}
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav::before {
+  content: "HEALTH MENU";
+
+  margin-bottom: 5px;
+  padding-left: 12px;
+
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Navigation buttons */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button {
+  min-height: 49px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 13px 15px;
+
+  border: 1px solid transparent;
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* Small navigation indicator */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button::before {
+  content: "";
+
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button:hover {
+  transform: translateX(5px);
+
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.12);
+
+  color: #FFFFFF;
+}
+
+/* Active navigation */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button.dashboard-nav-active {
+  background: linear-gradient(
+    110deg,
+    #B8E8CD,
+    #A3D8EC
+  );
+
+  border-color: rgba(255, 255, 255, 0.65);
+
+  color: #173D35;
+
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button.dashboard-nav-active::before {
+  background: #16865F;
+  border-color: #16865F;
+
+  box-shadow: 0 0 0 4px rgba(22, 134, 95, 0.15);
+}
+
+/* Custom keyboard focus */
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button:focus {
+  outline: none;
+}
+
+.dashboard:not(.doctor-dashboard) .dashboard-nav button:focus-visible {
+  outline: 2px solid #A3D8EC;
+  outline-offset: 3px;
+}
+
+/* Logout button */
+
+.dashboard:not(.doctor-dashboard) .logout-btn {
+  min-height: 45px;
+
+  padding: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.10);
+  color: #FFFFFF;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.dashboard:not(.doctor-dashboard) .logout-btn:hover {
+  background: #9BC9A5;
+  color: #173D35;
+  transform: translateY(-2px);
+}
+
+/* Sidebar animation */
+
+@keyframes patientSidebarOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   PATIENT SIDEBAR - MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+  .dashboard:not(.doctor-dashboard) .dashboard-sidebar {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    padding: 22px;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-sidebar h2 {
+    font-size: 26px;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-nav::before {
+    display: none;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-nav button {
+    flex: 1;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 10px 8px;
+
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-nav button::before {
+    display: none;
+  }
+
+  .dashboard:not(.doctor-dashboard) .dashboard-sidebar > .logout-btn {
+    margin-top: 17px;
+  }
+}
+

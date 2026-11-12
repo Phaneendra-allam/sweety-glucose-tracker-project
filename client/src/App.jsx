@@ -10,9 +10,24 @@ import {
 
 import "./App.css";
 import api from "./api";
+
 import Dashboard from "./Dashboard";
 import HistoryPage from "./pages/HistoryPage";
 import ReportsPage from "./pages/ReportsPage";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import DoctorPatientReport from "./pages/DoctorPatientReport";
+
+function getStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem("user") || "null");
+  } catch {
+    return null;
+  }
+}
+
+function getHomePath(user) {
+  return user?.role === "doctor" ? "/doctor" : "/dashboard";
+}
 
 function LoginPage({ onLogin }) {
   const [page, setPage] = useState("login");
@@ -44,7 +59,7 @@ function LoginPage({ onLogin }) {
         JSON.stringify(response.data.user)
       );
 
-      onLogin();
+      onLogin(response.data.user);
     } catch (error) {
       setMessage(
         error.response?.data?.message ||
@@ -60,7 +75,7 @@ function LoginPage({ onLogin }) {
       <aside className="sidebar">
         <div>
           <h2 className="brand">Sweety</h2>
-          <p className="tagline">Your health companion</p>
+          <p className="tagline">Smart Health Tracker</p>
 
           <nav className="sidebar-nav">
             <button
@@ -86,14 +101,13 @@ function LoginPage({ onLogin }) {
         </div>
 
         <div className="sidebar-bottom">
-          <span>Track better.</span>
-          <span>Live healthier.</span>
+          <span>Track better</span>
+          <span>Wellness Balance Healthful</span>
         </div>
       </aside>
 
       <main className="main">
         <div className="auth-card">
-          <div className="brand-mark">S</div>
 
           {page === "login" ? (
             <>
@@ -218,9 +232,20 @@ function LoginPage({ onLogin }) {
   );
 }
 
-function ProtectedRoute({ authenticated, children }) {
+function ProtectedRoute({
+  authenticated,
+  user,
+  requiredRole,
+  children
+}) {
   if (!authenticated) {
     return <Navigate to="/" replace />;
+  }
+
+  const actualRole = user?.role || "patient";
+
+  if (actualRole !== requiredRole) {
+    return <Navigate to={getHomePath(user)} replace />;
   }
 
   return children;
@@ -231,17 +256,26 @@ function AppRoutes() {
     Boolean(localStorage.getItem("token"))
   );
 
+  const [user, setUser] = useState(getStoredUser);
+
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = (loggedInUser) => {
+    setUser(loggedInUser);
     setAuthenticated(true);
-    navigate("/dashboard");
+
+    navigate(getHomePath(loggedInUser), {
+      replace: true
+    });
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
+    setUser(null);
     setAuthenticated(false);
+
     navigate("/", { replace: true });
   };
 
@@ -251,7 +285,7 @@ function AppRoutes() {
         path="/"
         element={
           authenticated
-            ? <Navigate to="/dashboard" replace />
+            ? <Navigate to={getHomePath(user)} replace />
             : <LoginPage onLogin={handleLogin} />
         }
       />
@@ -259,7 +293,11 @@ function AppRoutes() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute authenticated={authenticated}>
+          <ProtectedRoute
+            authenticated={authenticated}
+            user={user}
+            requiredRole="patient"
+          >
             <Dashboard onLogout={handleLogout} />
           </ProtectedRoute>
         }
@@ -268,7 +306,11 @@ function AppRoutes() {
       <Route
         path="/history"
         element={
-          <ProtectedRoute authenticated={authenticated}>
+          <ProtectedRoute
+            authenticated={authenticated}
+            user={user}
+            requiredRole="patient"
+          >
             <HistoryPage onLogout={handleLogout} />
           </ProtectedRoute>
         }
@@ -277,15 +319,50 @@ function AppRoutes() {
       <Route
         path="/reports"
         element={
-          <ProtectedRoute authenticated={authenticated}>
+          <ProtectedRoute
+            authenticated={authenticated}
+            user={user}
+            requiredRole="patient"
+          >
             <ReportsPage onLogout={handleLogout} />
           </ProtectedRoute>
         }
       />
 
       <Route
+        path="/doctor"
+        element={
+          <ProtectedRoute
+            authenticated={authenticated}
+            user={user}
+            requiredRole="doctor"
+          >
+            <DoctorDashboard onLogout={handleLogout} />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/doctor/patients/:id"
+        element={
+          <ProtectedRoute
+            authenticated={authenticated}
+            user={user}
+            requiredRole="doctor"
+          >
+            <DoctorPatientReport onLogout={handleLogout} />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="*"
-        element={<Navigate to="/" replace />}
+        element={
+          <Navigate
+            to={authenticated ? getHomePath(user) : "/"}
+            replace
+          />
+        }
       />
     </Routes>
   );
